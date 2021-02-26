@@ -21,3 +21,9 @@ https://hongkongbiliapi.sivrw.me/video?id=av810872
 https://hongkongbiliapi.sivrw.me/video?id=BV1Kr4y1A7RG
 
 https://hongkongbiliapi.sivrw.me/video?id=ep380479
+
+## 部署:
+
+VPS： 设置好lib.rs里面make_header()函数的SESSDATA直接编译运行即可
+
+阿里云函数: 新建一个HTTP函数 -> 设置好lib.rs里面make_header()函数的SESSDATA然后静态编译 -> 编译好之后在bootstrap添加一行`export ROCKET_PORT=9000`使其监听9000端口 -> 打包上传阿里云函数

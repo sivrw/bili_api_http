@@ -10,6 +10,8 @@
 
 bili_api_http: https://hongkongbiliapi.sivrw.me/playurl?avid=373866981&cid=285903176&qn=112
 
+可添加一个`fourk=0`参数使其支持4K视频
+(感谢[@SocialSisterYi](https://github.com/SocialSisterYi)整理的API)
 
 ## av/BV/ss/ep只需要前缀带上ID
 ### 例如:
@@ -24,6 +26,6 @@ https://hongkongbiliapi.sivrw.me/video?id=ep380479
 
 ## 部署:
 
-VPS： 设置好lib.rs里面make_header()函数的SESSDATA直接编译运行即可
+VPS： 编译完之后设置好环境变量即可
 
-阿里云函数: 新建一个HTTP函数 -> 设置好lib.rs里面make_header()函数的SESSDATA然后静态编译 -> 编译好之后在bootstrap添加一行`export ROCKET_PORT=9000`使其监听9000端口 -> 打包上传阿里云函数
+阿里云函数: 新建一个HTTP函数 -> 静态编译 -> 编译好之后在bootstrap添加一行`export ROCKET_PORT=9000`使其监听9000端口以及设置一个`SESSDATA`环境变量用于登陆 -> 打包上传阿里云函数

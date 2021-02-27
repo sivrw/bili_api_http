@@ -7,7 +7,7 @@ extern crate bili_api_http;
 
 use bili_api_http::make_header;
 
-#[get("video?<id>")]
+#[get("/video?<id>")]
 fn video(id: String) -> String{
     let client = reqwest::blocking::Client::new();
 
@@ -29,18 +29,22 @@ fn video(id: String) -> String{
     }
 }
 
-#[get("/playurl?<avid>&<cid>&<qn>")]
-pub fn get_download_url_qn(avid: String, cid: String, qn: Option<String>) -> String{
+#[get("/playurl?<avid>&<cid>&<qn>&<fourk>")]
+pub fn get_download_url_qn(avid: String, cid: String, qn: Option<String>, fourk: Option<String>) -> String{
     let client = reqwest::blocking::Client::new();
+    let fourk = match fourk{
+        Some(fourk_value) => format!("fourk={}", fourk_value),
+        None => String::from("fourk=0")
+    };
     match qn {
         Some(qn) => {
             let api = "https://api.bilibili.com/x/player/playurl?";
-            let url = format!("{}avid={}&cid={}&qn={}", api, avid, cid, qn);
+            let url = format!("{}avid={}&cid={}&qn={}&{}", api, avid, cid, qn, fourk);
             client.get(&url).headers(make_header()).send().unwrap().text().unwrap()
         },
         None => {
             let api = "https://api.bilibili.com/x/player/playurl?";
-            let url = format!("{}avid={}&cid={}", api, avid, cid);
+            let url = format!("{}avid={}&cid={}&{}", api, avid, cid, fourk);
             client.get(&url).headers(make_header()).send().unwrap().text().unwrap()
         }
     }
